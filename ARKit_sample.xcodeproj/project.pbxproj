@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A7F05911F67FB470098BB03 /* VirtualObjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7F05901F67FB470098BB03 /* VirtualObjectTableViewController.swift */; };
+		0A7F05941F67FE730098BB03 /* VirtualObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7F05931F67FE730098BB03 /* VirtualObjectManager.swift */; };
+		0A7F059A1F6801560098BB03 /* VirtualObjectDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7F05991F6801560098BB03 /* VirtualObjectDefinition.swift */; };
+		0A7F059F1F680C760098BB03 /* VirtualObjects.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A7F059E1F680B730098BB03 /* VirtualObjects.json */; };
 		0ACC4B061F66634A006D944B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC4B051F66634A006D944B /* AppDelegate.swift */; };
 		0ACC4B081F66634A006D944B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC4B071F66634A006D944B /* ViewController.swift */; };
 		0ACC4B0B1F66634A006D944B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ACC4B091F66634A006D944B /* Main.storyboard */; };
@@ -16,6 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A7F05901F67FB470098BB03 /* VirtualObjectTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectTableViewController.swift; sourceTree = "<group>"; };
+		0A7F05931F67FE730098BB03 /* VirtualObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectManager.swift; sourceTree = "<group>"; };
+		0A7F05991F6801560098BB03 /* VirtualObjectDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectDefinition.swift; sourceTree = "<group>"; };
+		0A7F059C1F68057B0098BB03 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; name = Models.scnassets; path = ARKit_sample/Models.scnassets; sourceTree = SOURCE_ROOT; };
+		0A7F059E1F680B730098BB03 /* VirtualObjects.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VirtualObjects.json; sourceTree = "<group>"; };
 		0ACC4B021F66634A006D944B /* ARKit_sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKit_sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ACC4B051F66634A006D944B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0ACC4B071F66634A006D944B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +47,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A7F058F1F67FB0D0098BB03 /* Additional View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0A7F05901F67FB470098BB03 /* VirtualObjectTableViewController.swift */,
+			);
+			path = "Additional View Controller";
+			sourceTree = "<group>";
+		};
+		0A7F05921F67FE580098BB03 /* VIrtual Objects */ = {
+			isa = PBXGroup;
+			children = (
+				0A7F05991F6801560098BB03 /* VirtualObjectDefinition.swift */,
+				0A7F05931F67FE730098BB03 /* VirtualObjectManager.swift */,
+				0A7F059E1F680B730098BB03 /* VirtualObjects.json */,
+			);
+			path = "VIrtual Objects";
+			sourceTree = "<group>";
+		};
 		0ACC4AF91F66634A006D944B = {
 			isa = PBXGroup;
 			children = (
@@ -57,10 +84,13 @@
 		0ACC4B041F66634A006D944B /* ARKit_sample */ = {
 			isa = PBXGroup;
 			children = (
+				0A7F05921F67FE580098BB03 /* VIrtual Objects */,
+				0A7F058F1F67FB0D0098BB03 /* Additional View Controller */,
 				0ACC4B171F666466006D944B /* art.scnassets */,
 				0ACC4B051F66634A006D944B /* AppDelegate.swift */,
 				0ACC4B071F66634A006D944B /* ViewController.swift */,
 				0ACC4B091F66634A006D944B /* Main.storyboard */,
+				0A7F059C1F68057B0098BB03 /* Models.scnassets */,
 				0ACC4B0C1F66634A006D944B /* Assets.xcassets */,
 				0ACC4B191F668334006D944B /* material.png */,
 				0ACC4B0E1F66634A006D944B /* LaunchScreen.storyboard */,
@@ -128,6 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ACC4B181F666579006D944B /* art.scnassets in Resources */,
+				0A7F059F1F680C760098BB03 /* VirtualObjects.json in Resources */,
 				0ACC4B101F66634A006D944B /* LaunchScreen.storyboard in Resources */,
 				0ACC4B0D1F66634A006D944B /* Assets.xcassets in Resources */,
 				0ACC4B0B1F66634A006D944B /* Main.storyboard in Resources */,
@@ -141,7 +172,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7F05911F67FB470098BB03 /* VirtualObjectTableViewController.swift in Sources */,
 				0ACC4B081F66634A006D944B /* ViewController.swift in Sources */,
+				0A7F05941F67FE730098BB03 /* VirtualObjectManager.swift in Sources */,
+				0A7F059A1F6801560098BB03 /* VirtualObjectDefinition.swift in Sources */,
 				0ACC4B061F66634A006D944B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

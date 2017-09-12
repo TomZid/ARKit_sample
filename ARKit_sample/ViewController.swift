@@ -1,10 +1,8 @@
-//
-//  ViewController.swift
-//  ARKit_sample
-//
-//  Created by Tom.Zid on 11/09/2017.
-//  Copyright © 2017 TZ. All rights reserved.
-//
+/**
+ * 隐藏statusBar
+ * 1. info.plist -> View controller-based status bar appearance (NO)
+ * 2.target -> general -> √hide status bar && √ requires full screen
+*/
 
 import UIKit
 import ARKit
@@ -113,6 +111,14 @@ class ViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let popoverController = segue.destination.popoverPresentationController, let button = sender as? UIButton {
+            popoverController.delegate = self
+            popoverController.sourceRect = button.bounds
+        }
+        // MARK: remaining
+    }
+    
 }
 
 extension ViewController: ARSCNViewDelegate {
@@ -142,4 +148,10 @@ extension ViewController: ARSCNViewDelegate {
         statusLabel.text = titleString
     }
     
+}
+
+extension ViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
 }

@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,11 +44,25 @@
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dj6-J2-DbR">
+                                <rect key="frame" x="165" y="597" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="3cO-Ek-BtR"/>
+                                    <constraint firstAttribute="width" constant="44" id="d1l-RB-o9Y"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="HLF-8N-asl" kind="popoverPresentation" identifier="showObjects" popoverAnchorView="Dj6-J2-DbR" id="bxR-MG-pHQ">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Dj6-J2-DbR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5oP-Df-bjD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="VjM-Jw-FoL" secondAttribute="bottom" id="BH2-ZI-ixT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="agy-B1-qyg" secondAttribute="trailing" constant="20" id="Lqj-GV-agw"/>
+                            <constraint firstItem="VjM-Jw-FoL" firstAttribute="baseline" secondItem="Dj6-J2-DbR" secondAttribute="firstBaseline" constant="70" id="Sd3-fk-g3V"/>
                             <constraint firstItem="VjM-Jw-FoL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Tpu-Ga-en5"/>
                             <constraint firstItem="VjM-Jw-FoL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bYh-HO-zpO"/>
                             <constraint firstItem="agy-B1-qyg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fpl-6N-jo2"/>
@@ -64,6 +79,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="171.36431784107947"/>
+        </scene>
+        <!--Virtual Object Table View Controller-->
+        <scene sceneID="reM-Om-K8j">
+            <objects>
+                <tableViewController id="HLF-8N-asl" customClass="VirtualObjectTableViewController" customModule="ARKit_sample" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" id="nkk-Qv-SvX">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="8lE-Vf-Ym6">
+                                <rect key="frame" x="0.0" y="28" width="250" height="45"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8lE-Vf-Ym6" id="g6U-75-7Ty">
+                                    <rect key="frame" x="0.0" y="0.0" width="250" height="44.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="HLF-8N-asl" id="rjC-Eq-OXt"/>
+                            <outlet property="delegate" destination="HLF-8N-asl" id="KkT-1Z-MEM"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="250" height="250"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lqx-FH-nco" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="984.79999999999995" y="505.99700149925042"/>
         </scene>
     </scenes>
 </document>
