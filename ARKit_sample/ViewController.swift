@@ -13,6 +13,7 @@ import SceneKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var arscnView: ARSCNView!
+    @IBOutlet weak var statusLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,7 @@ class ViewController: UIViewController {
 //        arscnView.scene = scene
         
         arscnView.showsStatistics = true
+        arscnView.delegate = self
         
         let scene_Box = SCNScene()
         let box = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0)
@@ -40,6 +42,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         let configuration = ARWorldTrackingConfiguration()
         arscnView.session.run(configuration)
     }
@@ -63,13 +66,13 @@ class ViewController: UIViewController {
             return
         }
         let nodePosition = node.position
-
+        
         //获取相机的坐标
         guard let cameraTransform = self.arscnView.session.currentFrame?.camera.transform else {
             return
         }
         let translation = cameraTransform.columns.3
-
+        
         //获得滑动距离
         let point = recognizer.translation(in: self.view)
         let pointX = Float(point.x / self.view.bounds.size.width) * 0.1
@@ -78,9 +81,9 @@ class ViewController: UIViewController {
         let newNodePositionX = pointX + nodePosition.x
         let newNodePositionY = -pointY + nodePosition.y
         let newNodePositionZ = (translation.z - 0.1 < pointY + nodePosition.z) ? (translation.z - 0.1) : (pointY + nodePosition.z)  // 模型z坐标距离摄像头0.1
-
+        
         node.position = SCNVector3(newNodePositionX, newNodePositionY, newNodePositionZ)
-
+        
         let angles = Float((node.eulerAngles.x>6) ? (Float.pi/32) : (node.eulerAngles.x+Float.pi/32))
         node.eulerAngles = SCNVector3(angles, angles,0)
         recognizer.setTranslation(CGPoint.zero, in:self.view)
@@ -108,6 +111,35 @@ class ViewController: UIViewController {
             let nodeScale = Float(recognizer.view!.transform.scaledBy(x: recognizer.scale, y: recognizer.scale).a) * self.nodeBeganScale
             node.scale = SCNVector3(nodeScale, nodeScale, nodeScale)
         }
+    }
+    
+}
+
+extension ViewController: ARSCNViewDelegate {
+    
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        var titleString: String!
+        switch camera.trackingState {
+        case .normal:
+            titleString = "Tracking normal"
+            break
+        case .notAvailable:
+            titleString = "TRACKING UNAVAILABLE"
+            break
+        case .limited(let reason):
+            switch reason {
+            case .initializing:
+                titleString = "Initializing AR Session"
+                break
+            case .excessiveMotion:
+                titleString = "TRACKING LIMITED\nToo much camera movement"
+                break
+            case .insufficientFeatures:
+                titleString = "TRACKING LIMITED\nNot enough surface detail"
+                break
+            }
+        }
+        statusLabel.text = titleString
     }
     
 }
