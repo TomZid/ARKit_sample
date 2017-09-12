@@ -47,22 +47,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0A7F058F1F67FB0D0098BB03 /* Additional View Controller */ = {
+		0A7F058F1F67FB0D0098BB03 /* AdditionalViewController */ = {
 			isa = PBXGroup;
 			children = (
 				0A7F05901F67FB470098BB03 /* VirtualObjectTableViewController.swift */,
 			);
-			path = "Additional View Controller";
+			path = AdditionalViewController;
 			sourceTree = "<group>";
 		};
-		0A7F05921F67FE580098BB03 /* VIrtual Objects */ = {
+		0A7F05921F67FE580098BB03 /* VirtualObjects */ = {
 			isa = PBXGroup;
 			children = (
 				0A7F05991F6801560098BB03 /* VirtualObjectDefinition.swift */,
 				0A7F05931F67FE730098BB03 /* VirtualObjectManager.swift */,
 				0A7F059E1F680B730098BB03 /* VirtualObjects.json */,
 			);
-			path = "VIrtual Objects";
+			path = VirtualObjects;
 			sourceTree = "<group>";
 		};
 		0ACC4AF91F66634A006D944B = {
@@ -84,8 +84,8 @@
 		0ACC4B041F66634A006D944B /* ARKit_sample */ = {
 			isa = PBXGroup;
 			children = (
-				0A7F05921F67FE580098BB03 /* VIrtual Objects */,
-				0A7F058F1F67FB0D0098BB03 /* Additional View Controller */,
+				0A7F05921F67FE580098BB03 /* VirtualObjects */,
+				0A7F058F1F67FB0D0098BB03 /* AdditionalViewController */,
 				0ACC4B171F666466006D944B /* art.scnassets */,
 				0ACC4B051F66634A006D944B /* AppDelegate.swift */,
 				0ACC4B071F66634A006D944B /* ViewController.swift */,
