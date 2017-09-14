@@ -12,6 +12,31 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var arscnView: ARSCNView!
     @IBOutlet weak var statusLabel: UILabel!
+
+    enum SegueIdentifier: String {
+        case showObjects
+        case showSettings
+    }
+    
+    var screenCenter: CGPoint?
+    var nodeBeganScale:Float!
+    var virtualObjectManager: VirtualObjectManager!
+    
+    let serialQueue = DispatchQueue(label: "com.tomzid.serialQueue")
+    // 苹果提供的工具类
+    var focusSquare: FocusSquare?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let configuration = ARWorldTrackingConfiguration()
+        arscnView.session.run(configuration)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        arscnView.session.pause()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,20 +61,18 @@ class ViewController: UIViewController {
         arscnView.scene = scene_Box
         
         addGestures()
+        
+        setupScene()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let configuration = ARWorldTrackingConfiguration()
-        arscnView.session.run(configuration)
+    func setupScene() {
+        virtualObjectManager = VirtualObjectManager(updateQueue: serialQueue)
+        setupFocusSquare()
+        DispatchQueue.main.async {
+            self.screenCenter = self.arscnView.center
+        }
     }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        arscnView.session.pause()
-    }
- 
+    
     func addGestures() {
         let panGeusture = UIPanGestureRecognizer(target: self, action: #selector(panFunc))
         arscnView.addGestureRecognizer(panGeusture)
@@ -87,9 +110,6 @@ class ViewController: UIViewController {
         recognizer.setTranslation(CGPoint.zero, in:self.view)
     }
     
-    
-    var nodeBeganScale:Float!
-    
     @objc func pinchFunc(recognizer:UIPinchGestureRecognizer) {
         // 获取节点在空间中位置
         guard let node = self.arscnView.scene.rootNode.childNode(withName: "boxNode", recursively: true) else {
@@ -116,12 +136,53 @@ class ViewController: UIViewController {
             popoverController.delegate = self
             popoverController.sourceRect = button.bounds
         }
-        // MARK: remaining
+        
+        guard let identifier = segue.identifier, let segueIdentifier = SegueIdentifier(rawValue: identifier) else {return}
+        if segueIdentifier == .showObjects, let objectsVC = segue.destination as? VirtualObjectTableViewController {
+            objectsVC.delegate = self
+        }
     }
     
+    // MARK: focusSquare-setting
+    func setupFocusSquare() {
+        serialQueue.async {
+//            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: UIViewAnimationOptions.curveEaseOut, animations: {
+//                self.focusSquare?.isHidden = true
+//            }, completion: { result in
+//                if result {
+//                    self.focusSquare?.removeFromParentNode()
+//                    self.focusSquare = FocusSquare()
+//                    self.arscnView.scene.rootNode.addChildNode(self.focusSquare!)
+//                }
+//            })
+
+            self.focusSquare?.isHidden = true
+            self.focusSquare?.removeFromParentNode()
+            self.focusSquare = FocusSquare()
+            self.arscnView.scene.rootNode.addChildNode(self.focusSquare!)
+        }
+    }
+    
+    func updateFocusSquare() {
+        guard let screenCenter = screenCenter else {return}
+        
+        DispatchQueue.main.async {
+            let (worldPosition, planeAnchor, _) = self.virtualObjectManager.worldPositionFromScreenPosition(screenCenter, in: self.arscnView, objectPos: self.focusSquare?.simdPosition)
+            if let worldPosition = worldPosition {
+                self.serialQueue.async {
+                    self.focusSquare?.update(for: worldPosition, planeAnchor: planeAnchor, camera: self.arscnView.session.currentFrame?.camera)
+                }
+            }
+        }
+    }
 }
 
+// MARK: ARSCNViewDelegate
 extension ViewController: ARSCNViewDelegate {
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        self.updateFocusSquare()
+    }
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         var titleString: String!
